@@ -1,6 +1,8 @@
 # Dockerfiles
 Dockerfile that from gcr.io, build on DockerHub
 
+docker repo https://hub.docker.com/r/nxin/dockerfiles/
+
 # how to
 login docker hub https://hub.docker.com
 
