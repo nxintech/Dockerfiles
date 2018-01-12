@@ -17,7 +17,7 @@ choose `Public and Private (Recommended)`
 
 select this repo, click `Create Auto-build Github`
 
-trigger a build
+`trigger` a build, and `save changes`
 
 ![](imgs/build.png)
 
@@ -25,6 +25,6 @@ trigger a build
 see result in `Build Details`
 
 
-![](imgs/build2.png)
+![](imgs/detail.png)
 
 more detail see https://docs.docker.com/docker-hub/builds/
