@@ -19,4 +19,10 @@ trigger a build
 
 ![](imgs/build.png)
 
+
+see result in `Build Details`
+
+
+![](imgs/build2.png)
+
 more detail see https://docs.docker.com/docker-hub/builds/
