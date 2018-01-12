@@ -2,4 +2,21 @@
 Dockerfile that from gcr.io, build on DockerHub
 
 # how to
-login dockerhub
+login docker hub https://hub.docker.com
+
+click `Create` `Create Automated Build`
+
+![](imgs/create.png)
+
+(optional) if your account not link to GitHub, link GitHub first,
+choose `Public and Private (Recommended)`
+
+![](imgs/link.png)
+
+select this repo, click `Create Auto-build Github`
+
+trigger a build
+
+![](imgs/build.png)
+
+more detail see https://docs.docker.com/docker-hub/builds/
