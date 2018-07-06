@@ -114,7 +114,7 @@ RUN set -eux; \
 	rm -rf webapps/*; \
 	rm -f conf/server.xml; \
 	sed 's/handlers = 1.*/handlers = java\.util\.logging\.ConsoleHandler/' -i conf/logging.properties; \
-	echo "JAVA_OPTS=-Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=10053 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false" > bin/setenv.sh; \
+	echo "JAVA_OPTS=\"-Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=10053 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false\"" > bin/setenv.sh; \
 	\
 # sh removes env vars it doesn't support (ones with periods)
 # https://github.com/docker-library/tomcat/issues/77
