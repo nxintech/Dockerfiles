@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat
 // get name of image, format: 'registry/job_name:tag'
 def registry = "cargo.caicloudprivatetest.com"
 def tag = "${env.BUILD_NUMBER}_${new SimpleDateFormat("yyyyMddHHmm").format(new Date())}"
-def img = "${registry}/${env.JOB_NAME}:${tag}"
+def img = "${registry}/release/${env.JOB_NAME}:${tag}"
 
 
 node {
