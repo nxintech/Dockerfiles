@@ -8,15 +8,9 @@
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
 
-  <GlobalNamingResources>
-  </GlobalNamingResources>
-
   <Service name="Catalina">
     <Connector port="8080" protocol="HTTP/1.1" connectionTimeout="20000" URIEncoding="UTF-8" />
     <Engine name="Catalina" defaultHost="localhost">
-      <Realm className="org.apache.catalina.realm.LockOutRealm">
-        <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
-      </Realm>
       <Host name="localhost"  appBase="webapps" unpackWARs="true" autoDeploy="true">
         <Valve className="org.apache.catalina.valves.RemoteIpValve"
                remoteIpHeader="X-Forwarded-For" 
