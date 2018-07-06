@@ -113,6 +113,7 @@ RUN set -eux; \
 	apk del .fetch-deps .native-build-deps; \
 	rm -rf webapps/*; \
 	rm -f conf/server.xml; \
+	sed 's/handlers = 1.*/handlers = java\.util\.logging\.ConsoleHandler/' -i conf/logging.properties; \
 	\
 # sh removes env vars it doesn't support (ones with periods)
 # https://github.com/docker-library/tomcat/issues/77
