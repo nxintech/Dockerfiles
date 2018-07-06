@@ -77,7 +77,8 @@ RUN set -eux; \
 	nativeBuildDir="$(mktemp -d)"; \
 	tar -xvf bin/tomcat-native.tar.gz -C "$nativeBuildDir" --strip-components=1; \
 	apk add --no-cache --virtual .native-build-deps \
-    # remove apr and ssl, apr-dev openssl-dev
+        # remove openssl-dev
+	        apr-dev \
 		coreutils \
 		dpkg-dev dpkg \
 		gcc \
@@ -88,12 +89,13 @@ RUN set -eux; \
 		export CATALINA_HOME="$PWD"; \
 		cd "$nativeBuildDir/native"; \
 		gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
-    # remove apr and ssl support,--with-apr="$(which apr-1-config)" --with-ssl=yes
 		./configure \
 			--build="$gnuArch" \
 			--libdir="$TOMCAT_NATIVE_LIBDIR" \
 			--prefix="$CATALINA_HOME" \
+			--with-apr="$(which apr-1-config)" \
 			--with-java-home="$JAVA_HOME" \
+			--with-ssl=no \
 			; \
 		make -j "$(nproc)"; \
 		make install; \
