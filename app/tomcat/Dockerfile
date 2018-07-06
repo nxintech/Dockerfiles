@@ -1,10 +1,12 @@
 FROM cargo.caicloudprivatetest.com/library/tomcat-alpine:jdk8-8.0.52
 
-ENV JAVA_OPTS="-Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=10053 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
-
-COPY app.jar app.jar
+RUN set -eux; \
+	  echo "JAVA_OPTS="-Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=10053 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false" > bin/setenv.sh; \
+	  mkdir webapps/ROOT; \
+	  unzip app.war -d webapps/ROOT;\
+	  rm -f app.war
 
 EXPOSE 8080
 EXPOSE 10053
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["bin/catalina.sh", "run"] 
