@@ -8,7 +8,8 @@ FROM cargo.caicloudprivatetest.com/library/tomcat-alpine:jdk8-8.0.52
 COPY --from build-stage /ROOT webapps/ROOT
 
 # apollo -Denv=dev
-RUN echo "JAVA_OPTS=\"${JAVA_OPTS} -Denv=dev" >> bin/setenv.sh
+RUN echo "JAVA_OPTS=\"\${JAVA_OPTS} -Denv=dev\"" >> bin/setenv.sh;
+
 
 EXPOSE 8080
 EXPOSE 10053
