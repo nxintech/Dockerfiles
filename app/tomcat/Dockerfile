@@ -10,7 +10,8 @@ COPY --from build-stage /ROOT webapps/ROOT
 # apollo -Denv=dev
 RUN echo "JAVA_OPTS=\"\${JAVA_OPTS} -Denv=dev\"" >> bin/setenv.sh;
 
-
+# if use dubbo
+# EXPOSE 7000
 EXPOSE 8080
 EXPOSE 10053
 

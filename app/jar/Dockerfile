@@ -8,6 +8,8 @@ COPY app.jar app.jar
 RUN mkdir -p /opt/settings \
     && echo 'env=dev' >> /opt/settings/server.properties
 
+# if use dubbo
+# EXPOSE 7000
 EXPOSE 8080
 EXPOSE 10053
 
