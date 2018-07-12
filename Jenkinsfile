@@ -13,7 +13,7 @@ node {
 
     stage('Compile'){
         // 'gradle4.31' is gradle tool name defined in Jenkins Tools configure
-        def gradleHome = tool 'gradle4.31'
+        def gradleHome = tool "gradle4.31"
         
         // jar springboot
         if (params.env == null) {
@@ -31,7 +31,7 @@ node {
         else {
           sh "${gradleHome}/bin/gradle clean ${params.env} war"
         }
-        sh 'mv build/libs/name-VERSION-SNAPSHOT.war app.war'
+        sh "mv build/libs/name-VERSION-SNAPSHOT.war app.war"
     }
 
     stage('Sonar'){
@@ -45,7 +45,7 @@ node {
     stage('Push Image'){
         // 'docker-registry-login' is the username/password credentials ID
         // as defined in Jenkins Credentials.
-        docker.withRegistry("http://${registry}", 'docker-registry-login') {
+        docker.withRegistry("http://${registry}", "docker-registry-login") {
             // login harbor before push on jenkins
             sh "docker push ${img}"
             echo "Image push complete"
