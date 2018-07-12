@@ -45,7 +45,7 @@ node {
     stage('Push Image'){
         // 'docker-registry-login' is the username/password credentials ID
         // as defined in Jenkins Credentials.
-        docker.withRegistry('http://${registry}', 'docker-registry-login') {
+        docker.withRegistry("http://${registry}", 'docker-registry-login') {
             // login harbor before push on jenkins
             sh "docker push ${img}"
             echo "Image push complete"
