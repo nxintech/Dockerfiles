@@ -1,14 +1,15 @@
 FROM frolvlad/alpine-glibc:alpine-3.7
 
 ENV JAVA_VERSION=7 \
-    JAVA_UPDATE=79 \
+    JAVA_UPDATE=80 \
     JAVA_BUILD=15 \
     JAVA_HOME="/usr/lib/jvm/default-jvm"
 
+# Oracle no longer publishes JAVA7 packages
+COPY jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz
+
 RUN apk add --no-cache --virtual=build-dependencies wget ca-certificates unzip && \
     cd "/tmp" && \
-    wget --header "Cookie: oraclelicense=accept-securebackup-cookie;" \
-        "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}u${JAVA_UPDATE}-b${JAVA_BUILD}/jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz" && \
     tar -xzf "jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz" && \
     mkdir -p "/usr/lib/jvm" && \
     mv "/tmp/jdk1.${JAVA_VERSION}.0_${JAVA_UPDATE}" "/usr/lib/jvm/java-${JAVA_VERSION}-oracle" && \
@@ -49,8 +50,8 @@ RUN apk add --no-cache --virtual=build-dependencies wget ca-certificates unzip &
            "$JAVA_HOME/jre/lib/jfr" \
            "$JAVA_HOME/jre/lib/oblique-fonts" && \
     wget --header "Cookie: oraclelicense=accept-securebackup-cookie;" \
-        "http://download.oracle.com/otn-pub/java/jce/${JAVA_VERSION}/jce_policy-${JAVA_VERSION}.zip" && \
-    unzip -jo -d "${JAVA_HOME}/jre/lib/security" "jce_policy-${JAVA_VERSION}.zip" && \
+        "http://download.oracle.com/otn-pub/java/jce/7/UnlimitedJCEPolicyJDK7.zip" && \
+    unzip -jo -d "${JAVA_HOME}/jre/lib/security" "UnlimitedJCEPolicyJDK7.zip" && \
     rm "${JAVA_HOME}/jre/lib/security/README.txt" && \
     apk del build-dependencies && \
     rm "/tmp/"*
