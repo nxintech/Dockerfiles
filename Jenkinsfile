@@ -22,7 +22,6 @@ node {
         else {
           sh "${gradleHome}/bin/gradle ${params.env} clean bootJar -S"
         }
-        sh 'mv build/libs/name-VERSION-SNAPSHOT.jar app.jar'
         
         // 2 war
         if (params.env == null) {
@@ -31,16 +30,21 @@ node {
         else {
           sh "${gradleHome}/bin/gradle clean ${params.env} war"
         }
-        sh "mv build/libs/name-VERSION-SNAPSHOT.war app.war"
         
-        
-        // 3 build in sub module
-        // add module in params before
+        // 3 build sub module
         ws("${WORKSPACE}/${params.module}") {
-    	  def gradleHome = tool "gradle4.31"
-          sh "${gradleHome}/bin/gradle clean ${params.env} war"
+          if (params.env == null) {
+            sh "${gradleHome}/bin/gradle clean war"
+          } else {
+            sh "${gradleHome}/bin/gradle clean ${params.env} war"
+          }
     	}
-        sh "mv ${params.module}/build/libs/name-VERSION-SNAPSHOT.war app.war"
+    }
+    
+    stage('Rename') {
+        sh "mv build/libs/name-VERSION-SNAPSHOT.war_or_jar app.war_or_jar"
+        // build sub module
+        sh "mv ${params.module}/build/libs/name-VERSION-SNAPSHOT.war_or_jar app.war_or_jar"
     }
 
     stage('Sonar'){
