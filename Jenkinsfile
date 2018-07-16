@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 def registry = "cargo.caicloudprivatetest.com"
 def tag = "${env.BUILD_NUMBER}_${new SimpleDateFormat("yyyyMddHHmm").format(new Date())}"
 def img = "${registry}/release/${env.JOB_NAME}:${tag}"
+//def module = "module name"
 
 
 node {
@@ -31,22 +32,10 @@ node {
           sh "${gradleHome}/bin/gradle clean ${params.env} war"
         }
         
-        // 3 build sub module
-        ws("${WORKSPACE}/${params.module}") {
-          if (params.env == null) {
-            sh "${gradleHome}/bin/gradle clean war"
-          } else {
-            sh "${gradleHome}/bin/gradle clean ${params.env} war"
-          }
-    	}
+        // rename
+        sh "mv build/libs/name-VERSION-SNAPSHOT.war_or_jar app.war_or_jar"
     }
     
-    stage('Rename') {
-        sh "mv build/libs/name-VERSION-SNAPSHOT.war_or_jar app.war_or_jar"
-        // build sub module
-        sh "mv ${params.module}/build/libs/name-VERSION-SNAPSHOT.war_or_jar app.war_or_jar"
-    }
-
     stage('Sonar'){
     }
 
@@ -63,5 +52,32 @@ node {
             sh "docker push ${img}"
             echo "Image push complete"
         }
+    }
+    
+    
+    // Sub modele build
+    ws("${WORKSPACE}/${module}") {
+      stage('Compile'){
+        def gradleHome = tool "gradle4.31"
+        
+        if (params.env == null) {
+          sh "${gradleHome}/bin/gradle clean war"
+          // sh "${gradleHome}/bin/gradle clean bootJar -S"
+        }
+        else {
+          sh "${gradleHome}/bin/gradle clean ${params.env} war"  
+          // sh "${gradleHome}/bin/gradle ${params.env} clean bootJar -S"
+        }
+            
+        sh "mv build/libs/name-VERSION-SNAPSHOT.war_or_jar app.war_or_jar"
+      }
+
+      stage('Push Image'){
+        sh "docker build -t ${img} --no-cache ."
+        docker.withRegistry("http://${registry}", "docker-registry-login") {
+            sh "docker push ${img}"
+        }
+      }
+        
     }
 }
