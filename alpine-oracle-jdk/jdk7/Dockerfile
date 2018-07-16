@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-glibc:alpine-3.7
+FROM cargo.caicloudprivatetest.com/library/alpine:3.7
 
 ENV JAVA_VERSION=7 \
     JAVA_UPDATE=80 \
