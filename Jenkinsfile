@@ -15,7 +15,7 @@ node {
         // 'gradle4.31' is gradle tool name defined in Jenkins Tools configure
         def gradleHome = tool "gradle4.31"
         
-        // jar springboot
+        // 1 jar springboot
         if (params.env == null) {
           sh "${gradleHome}/bin/gradle clean bootJar -S"
         }
@@ -24,7 +24,7 @@ node {
         }
         sh 'mv build/libs/name-VERSION-SNAPSHOT.jar app.jar'
         
-        // war
+        // 2 war
         if (params.env == null) {
           sh "${gradleHome}/bin/gradle clean war"
         }
@@ -32,6 +32,15 @@ node {
           sh "${gradleHome}/bin/gradle clean ${params.env} war"
         }
         sh "mv build/libs/name-VERSION-SNAPSHOT.war app.war"
+        
+        
+        // 3 build in sub module
+        // add module in params before
+        ws("${WORKSPACE}/${params.module}") {
+    	  def gradleHome = tool "gradle4.31"
+          sh "${gradleHome}/bin/gradle clean ${params.env} war"
+    	}
+        sh "mv ${params.module}/build/libs/name-VERSION-SNAPSHOT.war app.war"
     }
 
     stage('Sonar'){
