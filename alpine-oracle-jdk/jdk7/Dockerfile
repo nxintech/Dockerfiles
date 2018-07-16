@@ -6,6 +6,7 @@ ENV JAVA_VERSION=7 \
     JAVA_HOME="/usr/lib/jvm/default-jvm"
 
 # Oracle no longer publishes JAVA7 packages
+# download page http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
 COPY jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz /tmp/jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz
 
 RUN apk add --no-cache --virtual=build-dependencies wget ca-certificates unzip && \
