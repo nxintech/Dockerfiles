@@ -21,7 +21,7 @@ node {
           sh "${gradleHome}/bin/gradle clean bootJar -S"
         }
         else {
-          sh "${gradleHome}/bin/gradle ${params.env} clean bootJar -S"
+          sh "${gradleHome}/bin/gradle clean ${params.env} bootJar -S"
         }
         
         // 2 war
