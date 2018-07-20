@@ -79,6 +79,11 @@ node {
         docker.withRegistry("http://${registry}", "docker-registry-login") {
             sh "docker push ${img}"
         }
+          
+        // auto deploy on kubenates
+        sh("""
+            kubectl -n zone1 get release <your_app> -o yaml|sed -r 's#"image":"[^"]*#"image":"${img}#'
+        """)  
       }    
     }
 }
