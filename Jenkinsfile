@@ -81,9 +81,10 @@ node {
         }
     }
         
-     // auto deploy on kubenates, add below in stage 'Push Image'
-     sh("""
+    stage('Auto Deploy') {
+      // auto deploy on kubenates
+      sh("""
         kubectl -n zone1 get release <your_app> -o yaml|sed -r 's#"image":"[^"]*#"image":"${img}#' | kubectl apply -f -
-      """)  
-      }    
+        """)  
+    }    
 }
