@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 def registry = "cargo.caicloudprivatetest.com"
 def tag = "${env.BUILD_NUMBER}_${new SimpleDateFormat("yyyyMddHHmm").format(new Date())}"
 def img = "${registry}/release/${env.JOB_NAME}:${tag}"
-
+//def module = "your sub module name"  
 
 
 node {
@@ -57,7 +57,7 @@ node {
     
     // Sub modele build
     ws("${WORKSPACE}/${module}") {
-      def module = "module name"  
+      
       
       stage('Compile'){
         def gradleHome = tool "gradle4.31"
@@ -77,7 +77,7 @@ node {
       stage('Push Image'){
         sh "docker build -t ${img} --no-cache ."
         docker.withRegistry("http://${registry}", "docker-registry-login") {
-            sh "docker push ${img}"
+          sh "docker push ${img}"
         }
     }
         
